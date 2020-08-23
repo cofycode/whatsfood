@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  title: API WhatsFood
+  version: '1.0'
+  contact:
+    name: CofyCode
+    email: codecofy@gmail.com
+  license:
+    name: MIT
+servers:
+  - url: 'https://api.sendpushs.com'
+    description: Sandbox
+paths:
+  /auth:
+    post:
+      summary: Autenticação
+      operationId: post-auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  token:
+                    type: string
+                required:
+                  - name
+                  - token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+components:
+  schemas: {}
