@@ -43,5 +43,237 @@ paths:
               required:
                 - email
                 - password
+  /products:
+    get:
+      summary: Todos produtos
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    active:
+                      type: boolean
+                    name:
+                      type: string
+                    categorie:
+                      type: string
+                    price:
+                      type: string
+      operationId: get-products
+      description: Todos os produtos da loja que usuário está autenticado
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+    post:
+      summary: Criar produto
+      operationId: post-products
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  '':
+                    type: string
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: string
+                discount:
+                  type: number
+                active:
+                  type: boolean
+                categorie_id:
+                  type: integer
+                file_id:
+                  type: integer
+              required:
+                - name
+                - description
+                - price
+                - active
+                - categorie_id
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+  '/products/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Ver produto
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  active:
+                    type: boolean
+                  price:
+                    type: number
+                  discount:
+                    type: number
+                  description:
+                    type: string
+                  file_id:
+                    type: integer
+                  categorie_id:
+                    type: integer
+                required:
+                  - id
+                  - name
+                  - active
+                  - price
+                  - description
+      operationId: get-products-id
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+    put:
+      summary: Atualizar produto
+      operationId: put-products-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                discount:
+                  type: string
+                active:
+                  type: boolean
+                description:
+                  type: string
+                file_id:
+                  type: integer
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+    delete:
+      summary: Deletar produto
+      operationId: delete-products-id
+      responses:
+        '204':
+          description: No Content
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+  /files:
+    post:
+      summary: Criar arquivo
+      operationId: post-files
+      responses:
+        '200':
+          description: OK
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  file:
+                    type: string
+                  folder:
+                    type: string
+                    description: |
+                      Colocar numa pasta diferente do padrão
+                required:
+                  - file
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+  '/files/{q}':
+    get:
+      summary: Ver imagem
+      tags: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                  - message
+      operationId: 'get-files-:q'
+      description: ''
+    parameters:
+      - schema:
+          type: string
+        name: q
+        in: path
+        required: true
 components:
   schemas: {}
