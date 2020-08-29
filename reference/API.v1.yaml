@@ -275,5 +275,80 @@ paths:
         name: q
         in: path
         required: true
+  /menu:
+    get:
+      summary: Ver cárdapio
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        products:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              price:
+                                type: number
+                              discount:
+                                type: number
+                              image:
+                                type: string
+                  client:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      phone:
+                        type: string
+                  store:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      logo:
+                        type: string
+                      banner:
+                        type: string
+                required:
+                  - client
+                  - store
+        '400':
+          description: Bad Request
+      operationId: get-menu
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: store
+          description: Phone of store
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: client
+          description: Phone of client
+          required: true
 components:
   schemas: {}
