@@ -150,9 +150,9 @@ paths:
                   active:
                     type: boolean
                   price:
-                    type: number
+                    type: string
                   discount:
-                    type: number
+                    type: string
                   description:
                     type: string
                   file_id:
@@ -165,6 +165,7 @@ paths:
                   - active
                   - price
                   - description
+                  - categorie_id
       operationId: get-products-id
       parameters:
         - schema:
@@ -222,26 +223,31 @@ paths:
           in: header
           name: Authentication
           required: true
-  /files:
-    post:
-      summary: Criar arquivo
-      operationId: post-files
+    patch:
+      summary: Adicionar imagem no produto
+      operationId: patch-products-id
       responses:
         '200':
           description: OK
           content:
-            multipart/form-data:
+            application/json:
               schema:
                 type: object
                 properties:
-                  file:
+                  id:
+                    type: integer
+                  url:
                     type: string
-                  folder:
-                    type: string
-                    description: |
-                      Colocar numa pasta diferente do padrão
-                required:
-                  - file
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: string
+              required:
+                - files
       parameters:
         - schema:
             type: string
@@ -350,5 +356,77 @@ paths:
           name: client
           description: Phone of client
           required: true
+  /stores:
+    parameters: []
+    put:
+      summary: Atualizar loja
+      operationId: put-stores-id
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                street:
+                  type: string
+                district:
+                  type: string
+                number:
+                  type: string
+                active:
+                  type: boolean
+    get:
+      summary: Ver loja
+      operationId: get-stores-id
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+  '/stores/{key}':
+    parameters:
+      - schema:
+          type: string
+        name: key
+        in: path
+        required: true
+    patch:
+      summary: Adicionar imagem na loja
+      operationId: patch-stores-id-key
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  url:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+              required:
+                - file
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
 components:
   schemas: {}
