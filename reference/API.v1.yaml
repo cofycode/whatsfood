@@ -254,33 +254,7 @@ paths:
           in: header
           name: Authentication
           required: true
-  '/files/{q}':
-    get:
-      summary: Ver imagem
-      tags: []
-      responses:
-        '200':
-          description: OK
-          headers: {}
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                required:
-                  - message
-      operationId: 'get-files-:q'
       description: ''
-    parameters:
-      - schema:
-          type: string
-        name: q
-        in: path
-        required: true
   /menu:
     get:
       summary: Ver cárdapio
@@ -356,7 +330,7 @@ paths:
           name: client
           description: Phone of client
           required: true
-  /stores:
+  /store:
     parameters: []
     put:
       summary: Atualizar loja
@@ -386,12 +360,35 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  street:
+                    type: string
+                  district:
+                    type: string
+                  number:
+                    type: string
+                  active:
+                    type: boolean
+                  phone:
+                    type: string
       parameters:
         - schema:
             type: string
           in: header
           name: Authentication
-  '/stores/{key}':
+    delete:
+      summary: Pausar loja
+      operationId: delete-store
+      responses:
+        '204':
+          description: No Content
+  '/store/{key}':
     parameters:
       - schema:
           type: string
@@ -423,6 +420,266 @@ paths:
                   type: string
               required:
                 - file
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+      description: "{key} pode ser 'logo' ou 'banner' (sem as aspas)"
+  /store/days:
+    get:
+      summary: Todos períodos da loja
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  breaks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        store_id:
+                          type: integer
+                        day_id:
+                          type: integer
+                        starts_at:
+                          type: string
+                        end_at:
+                          type: string
+      operationId: get-stores-days
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+    parameters: []
+    post:
+      summary: Adicionar período na loja
+      operationId: post-store-days
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  starts_at:
+                    type: string
+                  end_at:
+                    type: string
+                  store_id:
+                    type: integer
+                  day_id:
+                    type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                day_id:
+                  type: integer
+                starts_at:
+                  type: string
+                end_at:
+                  type: string
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+  '/store/days/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: Deletar período
+      operationId: delete-store-days-id
+      responses:
+        '204':
+          description: No Content
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+  /categories:
+    get:
+      summary: Todas categorias
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    store_id:
+                      type: integer
+                    active:
+                      type: boolean
+      operationId: get-categories
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+    post:
+      summary: Criar categoria
+      operationId: post-categories
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  active:
+                    type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                active:
+                  type: boolean
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+  '/categories/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Ver categoria
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  active:
+                    type: boolean
+                  store_id:
+                    type: integer
+      operationId: get-categories-id
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+    put:
+      summary: Atualizar categoria
+      operationId: put-categories-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  active:
+                    type: boolean
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                active:
+                  type: boolean
+    delete:
+      summary: Deletar categoria
+      operationId: delete-categories-id
+      responses:
+        '204':
+          description: No Content
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+  /days:
+    get:
+      summary: Todos dias
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+      operationId: get-days
       parameters:
         - schema:
             type: string
