@@ -728,5 +728,75 @@ paths:
               properties:
                 payment_method_id:
                   type: integer
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+  /store/delivery/ways:
+    get:
+      summary: Todas formas de entrega
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  active:
+                    type: boolean
+      operationId: get-store-delivery-ways
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+    patch:
+      summary: Ativar/desativar forma de entrega
+      operationId: patch-store-delivery-ways
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                delivery_way_id:
+                  type: integer
+    put:
+      summary: Atualizar preço do delivery
+      operationId: put-store-delivery-ways
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                price:
+                  type: string
+                  description: "exemplo: '3,5'"
+              required:
+                - price
 components:
   schemas: {}
