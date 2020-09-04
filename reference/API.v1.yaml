@@ -685,5 +685,48 @@ paths:
             type: string
           in: header
           name: Authentication
+  /store/payment/methods:
+    get:
+      summary: Todos métodos pagamento
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    active:
+                      type: boolean
+      operationId: get-store-payment-methods
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+    patch:
+      summary: Atualizar método de pagamento
+      operationId: patch-store-payment-methods
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Não existe o método de pagamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_method_id:
+                  type: integer
 components:
   schemas: {}
