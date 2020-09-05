@@ -798,5 +798,26 @@ paths:
                   description: "exemplo: '3,5'"
               required:
                 - price
+  /store/delivery/way/price:
+    get:
+      summary: Ver preço do delivery
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  price:
+                    type: string
+      operationId: get-store-delivery-way-price
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
 components:
   schemas: {}
