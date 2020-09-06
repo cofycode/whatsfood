@@ -125,6 +125,36 @@ paths:
           in: header
           name: Authentication
           required: true
+    patch:
+      summary: Adicionar imagem no produto
+      operationId: patch-products
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  url:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+              required:
+                - file
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
   '/products/{id}':
     parameters:
       - schema:
@@ -223,38 +253,6 @@ paths:
           in: header
           name: Authentication
           required: true
-    patch:
-      summary: Adicionar imagem no produto
-      operationId: patch-products-id
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  url:
-                    type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                files:
-                  type: string
-              required:
-                - files
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: Authentication
-          required: true
-      description: ''
   /menu:
     get:
       summary: Ver cárdapio
@@ -819,5 +817,6 @@ paths:
           in: header
           name: Authentication
           required: true
+      description: ''
 components:
   schemas: {}
