@@ -818,5 +818,132 @@ paths:
           name: Authentication
           required: true
       description: ''
+  /store/order/today:
+    parameters: []
+    get:
+      summary: Todos pedidos de hoje
+      operationId: get-store-order-today
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    products:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          price:
+                            type: string
+                          amount:
+                            type: string
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          description: ''
+          required: true
+  /store/order/pendings:
+    get:
+      summary: Todos os pedidos pendentes
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    products:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          '':
+                            type: string
+      operationId: get-store-order-pendings
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+  /store/order/accepted:
+    get:
+      summary: Todos pedidos aceitos
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    products:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          amount:
+                            type: string
+                          price:
+                            type: string
+      operationId: get-store-order-accepted
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+  '/orders/{id}/status':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    put:
+      summary: Avançar status do pedido
+      operationId: put-orders-id-status
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
+          required: true
+    delete:
+      summary: Cancelar pedido
+      operationId: delete-orders-id-status
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authentication
 components:
   schemas: {}
